@@ -17,14 +17,16 @@
             <div class="col-2" id="timer"><p>timer</p></div>
         </div>
         <div class="row justify-content-center" id="start">
-            <button class="btnStart btn-success btn-lg" style="display: none;" id="btnStart">Start</button>
+            <button class="btnStart btn-success btn-lg" id="btnStart">Start</button>
         </div>
         <div class="row quiz" id="quiz">
-            <div class="col-12 questions" id="questions">
-                <h1>Pregunta 1</h1>
-                <p>la pregunta numero 1</p>
+            <div class="col-12 questionsTitle" id="questionsTitle">
+                <!-- <h1>Pregunta 1</h1> -->
             </div>
-            <div class="col-12 selecMulti btn-group justify-content-around" id="selecMulti">
+            <div class="col-12 questions" id="questions">
+                <!-- <p>la pregunta numero 1</p> -->
+            </div>
+            <div class="col-12 selecMulti btn-group justify-content-around" id="selecMulti" style="visibility: hidden;">
                 <div class="col-3 btn-group-vertical">
                     <button class="btn-primary" id="btn1">option1</button class="btn-primary">
                     <button class="btn-primary" id="btn2">option2</button>
@@ -32,10 +34,13 @@
                 <div class="col-3 btn-group-vertical">
                     <button class="btn-primary" id="btn3">option3</button>
                     <button class="btn-primary" id="btn4">option4</button>
-                </div>  
+                </div>
             </div>
-            <hr>
-            <div class="col-12 answer" id="answer">
+            <!-- <div class="row justify-content-center" id="rowPrueba">
+                <button class="btnPrueba btn-success btn-lg" id="btnPrueba">Prueba</button> -->
+            </div>
+            <div class="col-12 answer" id="answer" style="visibility: hidden;">
+                <hr>
                 <h6>Wrong asnwer!!</h6>
             </div>
             <div class="col-12 final" id="final"></div>
