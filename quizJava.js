@@ -50,8 +50,8 @@ var questions = [
 
 //Variable for DOM
 var container = document.getElementById("container");
-var score = document.getElementById("score");
-var timer = document.getElementById("timer");
+var scorePoints = document.getElementById("scorePoints");
+var timerRow = document.getElementById("timerRow");
 var start = document.getElementById("start");
 var btnStart = document.getElementById("btnStart");
 var quiz = document.getElementById("quiz");
@@ -65,11 +65,15 @@ var btn4 = document.getElementById("btn4");
 var answer = document.getElementById("answer");
 var final = document.getElementById("final");
 var btnPrueba = document.getElementById("btnPrueba");
+var timerNumber = document.getElementById("timerNumber");
+var timeRun = "";
 
 //Variables for Question Maker
 
 var lastQuestion = questions.length -1;
 var nowQuestion = 0;
+var timeRun = "";
+var timer = 90;
 
 //Variable for Questions Verification
 
@@ -79,42 +83,146 @@ var userAnswer = "";
 
 var score = 0;
 
+
+
 /* -------------------------- */
 /* Function*/
 /* -------------------------- */
 
 //Function for create the question on screen
-function questionCreator (){
+function questionCreator1 (){
+    //container.removeChild(start);
+    //createChild();
     btnStart.style.visibility = "hidden";
-    selecMulti.style.visibility = "visible";
+    selecMulti.style.visibility = "visible"; 
+    startTime();
     var q = questions[nowQuestion];
     questionsTitle.innerHTML = "<h1>" + q.questionTitle + "</h1>";
     questionsZone.innerHTML = "<p>" + q.question + "</p>";
+    scorePoints.innerHTML = "<p>score: " + score + "</p>";
     btn1.innerHTML = q.choiceA;
     btn2.innerHTML = q.choiceB;
     btn3.innerHTML = q.choiceC;
     btn4.innerHTML = q.choiceD;
     //nowQuestion++;
-    //console.log(nowQuestion);
+    //console.log(score);
+
+}
+
+function questionCreator (){
+    //container.removeChild(start);
+    //createChild();
+    //btnStart.style.visibility = "hidden";
+    //selecMulti.style.visibility = "visible"; 
+    //startTime();
+    var q = questions[nowQuestion];
+    questionsTitle.innerHTML = "<h1>" + q.questionTitle + "</h1>";
+    questionsZone.innerHTML = "<p>" + q.question + "</p>";
+    scorePoints.innerHTML = "<p>score: " + score + "</p>";
+    btn1.innerHTML = q.choiceA;
+    btn2.innerHTML = q.choiceB;
+    btn3.innerHTML = q.choiceC;
+    btn4.innerHTML = q.choiceD;
+    //nowQuestion++;
+    //console.log(score);
 
 }
 
 //Function for question verification
 function questionVerification (){
     if (userAnswer == questions[nowQuestion].correct){
-        score + 20;
+        score = score+20;
         answerIsCorrect();
     }else{
-        //timer decrease by 5 sec
+        clearInterval(timeRun);
+        timer = timer - 15;
+        startTime();
         answerIsIncorrect();
     }
     if (nowQuestion < lastQuestion){
         nowQuestion++;
         questionCreator();
+        //console.log(score);
     }else{
+        scorePoints.innerHTML = "<p>score: " + score + "</p>";
         finalMessage();
     }
 }
+
+//Funcion correcta
+function answerIsCorrect (){
+    if (nowQuestion < lastQuestion){
+    answer.style.visibility = "visible";
+    answer.innerHTML = "<hr><h6>Correct  answer</h6>";
+    setTimeout(function(){
+        answer.style.visibility = "hidden";
+    }, 2000);}
+}
+
+//Funcion incorrecta
+function answerIsIncorrect (){
+    if (nowQuestion < lastQuestion){
+    answer.style.visibility = "visible";
+    answer.innerHTML = "<hr><h6>Wrong answer -15 seconds</h6>";
+    setTimeout(function(){
+        answer.style.visibility = "hidden";
+    }, 2000);}
+}
+
+//Funcion Final
+function finalMessage (){
+    clearInterval(timeRun);
+    container.removeChild(start);
+    final.style.visibility = "visible";
+    final.innerHTML = "<h2>You are done</h2><br><h4>Your score is: " + score;
+    setTimeout(function(){
+        final.style.visibility = "hidden";
+    }, 2000);
+}
+
+//Funcion Time out
+
+function timeOut (){
+    quitChild();
+    final.style.visibility = "visible";
+    final.innerHTML = "<h2>You are out of time.</h2><br><h4>Your score is: " + score;
+
+}
+
+//Funtion createChild
+
+// function createChild (){
+//     var createDiv = document.createElement('button');
+//     var insideChild = document.createTextNode('test');
+//     createDiv.appendChild(insideChild);
+//     createDiv.setAttribute('class','testDiv')
+//     createDiv.setAttribute('class','testDiv2')
+
+//     quiz.appendChild(createDiv);
+//}
+
+//Funtion quitChild
+
+function quitChild (){
+    container.removeChild(quiz);
+    
+
+
+}
+//Funcion Timer
+function startTime(){
+    timeRun = setInterval(timeDecre, 1000);
+    function timeDecre(){
+        timer--;
+        if (timer <= 0){
+            timeOut();
+            clearInterval(timeRun)
+        }
+        timerNumber.innerHTML = "<p>timer: " + timer + "</p>";
+        console.log(timer);
+}
+}
+
 
 
 /* -------------------------- */
@@ -122,7 +230,7 @@ function questionVerification (){
 /* -------------------------- */
 
 //Start Button
-btnStart.addEventListener('click' , questionCreator)
+btnStart.addEventListener('click' , questionCreator1)
 
 //Answer Buttons
 
@@ -144,8 +252,6 @@ btn4.addEventListener('click' , function(){
 
 })
 /*Cosas sin hacer
-    funciones answerIsCorrect, answerIsIncorrect, finalMessaje
     funsiones para vrear las div en el documento (para que se vea en el mismo sitio)
-    timer
     funcion de clear
     funcion de quit */
