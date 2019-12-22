@@ -173,6 +173,7 @@ function answerIsIncorrect (){
 function finalMessage (){
     clearInterval(timeRun);
     container.removeChild(start);
+    container.removeChild(quiz);
     final.style.visibility = "visible";
     final.innerHTML = "<h2>You are done</h2><br><h4>Your score is: " + score;
     setTimeout(function(){
