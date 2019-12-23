@@ -66,7 +66,6 @@ var answer = document.getElementById("answer");
 var final = document.getElementById("final");
 var btnPrueba = document.getElementById("btnPrueba");
 var timerNumber = document.getElementById("timerNumber");
-var timeRun = "";
 
 //Variables for Question Maker
 
