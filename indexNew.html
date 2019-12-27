@@ -3,7 +3,9 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -12,11 +14,15 @@
   </head>
   <body>
     <div class="container" id="container">
-        <div class=" row timer justify-content-between" id="timerRow">
-            <div class="col-2" id="scorePoints"><p>score: </p></div>
-            <div class="col-2" id="timerNumber"><p>timer: </p></div>
+        <div class=" row timer justify-content-around" id="timerRow">
+            <div class="col-4 text-right" id="scorePoints"><p id="scorePointsP">score: </p></div>
+            <div class="col-4" id="timerNumber"><p id="timerNumberP">timer: </p></div>
         </div>
         <div class="row justify-content-center" id="start">
+            <div class="col-12"><h1 class="welcomeMss">Welcome to Starwar Quiz</h1>
+            </div>
+            <div class="col-12"><h3 class="welcomeMss">Answer all the questions as best as you can</h3>
+            </div>
             <button class="btnStart btn-success btn-lg" id="btnStart">Start</button>
         </div>
         <div class="row justify-content-center questionRow" id="questionRow">

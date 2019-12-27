@@ -51,6 +51,8 @@ var nowQuestion = 0;
 var userAnswer = "";
 var score = 0;
 var lastQuestion = questions.length -1;
+var timeRun = "";
+var timer = 90;
 //var test = 19;
 //alert(questions[0].choiceA);
 
@@ -65,9 +67,9 @@ var lastQuestion = questions.length -1;
 function createDiv (){
     $("#start").empty();
     $("#questionRow").append('<div class = "col-12 questions" id = "questions"><h1 id= "questionTitle">Pregunta 1</h1><br><h4 id= "questionLine">variable pregunta</h4></div>')
-    $("#questionRow").append('<div class = "col-12 justify-content-around selecMulti" id = "selecMulti"></div>');
-    $("#selecMulti").append('<div class = "col-4 btn-group-vertical btnGroup1" id = "btnGroup1"></div>');
-    $("#selecMulti").append('<div class = "col-4 btn-group-vertical btnGroup2" id = "btnGroup2"></div>');
+    $("#questionRow").append('<div class = "col-12 selecMulti" id = "selecMulti"></div>');
+    $("#selecMulti").append('<div class = "col-3 btn-group-vertical btnGroup1" id = "btnGroup1"></div>');
+    $("#selecMulti").append('<div class = "col-3 btn-group-vertical btnGroup2" id = "btnGroup2"></div>');
     $("#btnGroup1").append('<button class= "btnOption btnOption1 btn-primary" id= "btnOption1" value= A>Option 1</button>');
     $("#btnGroup1").append('<button class= "btnOption btnOption2 btn-primary" id= "btnOption2" value= B>Option 2</button>');
     $("#btnGroup2").append('<button class= "btnOption btnOption3 btn-primary" id= "btnOption3" value= C>Option 3</button>');
@@ -78,6 +80,7 @@ function createDiv (){
 //Create questions
 function questionsCreator (){
     var q = questions[nowQuestion];
+    $("#scorePointsP").html("score: "  + score);
     $("#questionTitle").text(q.questionTitle);
     $("#questionLine").text(q.question);
     $("#btnOption1").text(q.choiceA);
@@ -85,6 +88,21 @@ function questionsCreator (){
     $("#btnOption3").text(q.choiceC);
     $("#btnOption4").text(q.choiceD);
     //console.log(q.questionTitle);
+}
+
+//Timer Functions
+
+function startTime(){
+    timeRun = setInterval(timeDecre, 1000);
+    function timeDecre(){
+        timer--;
+        if (timer <= 0){
+            timeOut();
+            clearInterval(timeRun) 
+        }
+        $("#timerNumberP").html("timer: "  + timer);
+        //console.log(timer);
+    }
 }
 
 //Question Verfication
@@ -118,22 +136,36 @@ function answerIsCorrect(){
 
 function answerIsIncorrect(){
     $("#finalRow").append('<div class: "col-12 finalMessaje" id: "finalMessaje"><hr><h3>Incorrect Answer<br>-15 Seconds</h3?</div>');
-    //clearInterval(timeRun);
-    //timer = timer-15;
-    //startTime();
+    clearInterval(timeRun);
+    timer = timer-15;
+    startTime();
     setTimeout(function(){
         $("#finalRow").empty();
     }, 500); 
 }
 
 function finalMessage(){
+    clearInterval(timeRun);
     $("#questionRow").empty();
+    $("#scorePointsP").html("score: "  + score);
     $("#questionRow").append("<div class: 'col-12 finalMessaje' id: 'finalMessaje'><h1>You are done</h1><h3>Your score is: " + score);
     $("#finalRow").append('<div class: "col-12 Record" id: "Record"><p>Insert your name and press enter<p><input type= "text" name= "userName"></div>');
-    $("#finalRow").append('<div class = "col-12 btn-group justify-content-around btnGroupFinal" id = "btnGroupFinal"></div>');
+    $("#finalRow").append('<div class = "col-12 btn-group justify-content-center btnGroupFinal" id = "btnGroupFinal"></div>');
     $("#btnGroupFinal").append('<button class= "btnFinal btnRestart btn-success" id= "btnRestart">Restart</button>');
     $("#btnGroupFinal").append('<button class= "btnFinal btnQuit btn-danger" id= "btnQuit">Exit</button>');
 }
+
+function timeOut(){
+    clearInterval(timeRun);
+    $("#questionRow").empty();
+    $("#questionRow").append("<div class: 'col-12 finalMessaje' id: 'finalMessaje'><h1>You are out of time</h1><h3>Your score is: " + score);
+    $("#finalRow").append('<div class: "col-12 Record" id: "Record"><p>Insert your name and press enter<p><input type= "text" name= "userName"></div>');
+    $("#finalRow").append('<div class = "col-12 btn-group justify-content-center btnGroupFinal" id = "btnGroupFinal"></div>');
+    $("#btnGroupFinal").append('<button class= "btnFinal btnRestart btn-success" id= "btnRestart">Restart</button>');
+    $("#btnGroupFinal").append('<button class= "btnFinal btnQuit btn-danger" id= "btnQuit">Exit</button>');
+}
+
+
 /* -------------------------- */
 /* Events*/
 /* -------------------------- */
@@ -144,6 +176,7 @@ $("#start").click(function(){
     //console.log("test");
     createDiv();
     questionsCreator();
+    startTime();
 })
 
 //Choice Button
@@ -154,4 +187,29 @@ $("#container").on('click','.btnOption', function(){
     //console.log(userAnswer);
 })
 
+//Restart button
+$("#finalRow").on('click', '.btnRestart', function(){
+    score = 0;
+    nowQuestion = 0;
+    $("#questionRow").empty();
+    $("#finalRow").empty();
+    createDiv();
+    questionsCreator();
+    clearInterval(timeRun);
+    timer = 90;
+    startTime();
+})
+
+//Quit button
+$("#finalRow").on('click', '.btnQuit', function(){
+    window.close();
+    console.log("test");
+})
 });
+
+//tabla de puntuaciones
+//Mensaje de bienvenida (encima de el buton de start)
+//css style: fondos de color y redondeados
+//           diferentes letras
+//           botones mas grandes y redondeados
+//           quitar el efecto de oprimido

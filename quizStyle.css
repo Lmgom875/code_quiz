@@ -1,5 +1,7 @@
 .container {
-    width: 700px;
+    text-align: center;
+}
+.welcomeMss{
     text-align: center;
 }
 p {
@@ -7,6 +9,12 @@ p {
 }
 .timer {
     text-align: left;
+}
+.btnGroup1{
+    align-items: center;
+}
+.btnGroup2{
+    align-items: center;
 }
 button{
     width: 150px;
